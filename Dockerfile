@@ -1,14 +1,20 @@
+#Deploy Angular website on windows IIS container
 FROM microsoft/iis:10.0.14393.206
 SHELL ["powershell"]
 
-# RUN Install-WindowsFeature NET-Framework-45-ASPNET ; \
-#     Install-WindowsFeature Web-Asp-Net45
+WORKDIR /install
 
-COPY .\dist C:\inetpub\wwwroot
+#install URL rewrite which required by Angular web.config
+COPY resources\\rewrite_amd64_en-US.msi .
+
+RUN Write-Host 'Installing URL Rewrite' ; \
+    Start-Process msiexec.exe -ArgumentList '/i', 'rewrite_amd64_en-US.msi', '/quiet', '/norestart' -NoNewWindow -Wait
+
+COPY .\\dist C:\\inetpub\\wwwroot
+
 RUN Remove-WebSite -Name 'Default Web Site'
 RUN New-Website -Name 'test site' -Port 80 -PhysicalPath 'C:\inetpub\wwwroot'
-# RUN New-Website -Name 'jokeWebApp' -Port 80 \
-#     -PhysicalPath 'c:\jokeWebApp' -ApplicationPool '.NET v4.5'
+
 EXPOSE 80
 
 CMD Write-Host IIS Started... ; \
