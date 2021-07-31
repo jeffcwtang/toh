@@ -1,2 +1,3 @@
 FROM nginx:alpine
-COPY ./dist /USR/SHARE/nginx/html
+COPY dist /usr/share/nginx/html
+COPY default.conf /etc/nginx/conf.d
