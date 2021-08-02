@@ -1,7 +1,7 @@
 pipeline {
     agent none
     stages {
-        stage("Build Angular and Docker Image"){
+        stage('Build in PC_11'){
             agent {label 'ATW_LAB_PC11'}
             stages{
                 stage('SCM Checkout') {
