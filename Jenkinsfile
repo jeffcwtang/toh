@@ -1,7 +1,7 @@
 pipeline {
     agent none
     stages {
-        stage('Build Angular and Docker Image'){
+        stage("Build Angular and Docker Image"){
             agent {label 'ATW_LAB_PC11'}
             stages{
                 stage('SCM Checkout') {
@@ -21,7 +21,6 @@ pipeline {
                     }
                 }
                 stage('Push Docker Image'){
-                    agent {label 'ATW_LAB_PC11'}
                     steps{
                         bat "docker push 10.18.30.15:5000/angulartest"
                     }
