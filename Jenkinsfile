@@ -39,4 +39,12 @@ pipeline {
             }
         }
     }
+    post {
+        success {
+            emailext attachLog: true, body: "CHANGE_AUTHOR = ${env.CHANGE_AUTHOR} JOB_BASE_NAME = ${env.JOB_BASE_NAME}", subject: "${env.JOB_NAME} - Build # ${env.BUILD_NUMBER} - Success", to: 'jeff.tang@asmpt.com'
+        }
+        failure {
+            emailext attachLog: true, body: "CHANGE_AUTHOR = ${env.CHANGE_AUTHOR} JOB_BASE_NAME = ${env.JOB_BASE_NAME}", subject: "${env.JOB_NAME} - Build # ${env.BUILD_NUMBER} - Failure", to: 'jeff.tang@asmpt.com'
+        }
+    }
 }
