@@ -3,26 +3,28 @@ pipeline {
     stages {
         stage('Build Angular and Docker Image'){
             agent {label 'ATW_LAB_PC11'}
-            stage('SCM Checkout') {
-                steps {
-                    git 'https://github.com/jeffcwtang/toh.git'
+            stages{
+                stage('SCM Checkout') {
+                    steps {
+                        git 'https://github.com/jeffcwtang/toh.git'
+                    }
                 }
-            }
-            stage('Angular build'){
-                steps{
-                    bat '''npm install'''
-                    bat '''ng build --configuration production'''
+                stage('Angular build'){
+                    steps{
+                        bat '''npm install'''
+                        bat '''ng build --configuration production'''
+                    }
                 }
-            }
-            stage('Build Docker Image'){
-                steps{
-                    bat "docker build -t 10.18.30.15:5000/angulartest ."
+                stage('Build Docker Image'){
+                    steps{
+                        bat "docker build -t 10.18.30.15:5000/angulartest ."
+                    }
                 }
-            }
-            stage('Push Docker Image'){
-                agent {label 'ATW_LAB_PC11'}
-                steps{
-                    bat "docker push 10.18.30.15:5000/angulartest"
+                stage('Push Docker Image'){
+                    agent {label 'ATW_LAB_PC11'}
+                    steps{
+                        bat "docker push 10.18.30.15:5000/angulartest"
+                    }
                 }
             }
         }
