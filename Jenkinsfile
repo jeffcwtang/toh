@@ -1,13 +1,16 @@
 pipeline {
-    agent {label 'ATW_LAB_PC11'}
+    agent none
     stages {
         stage('SCM Checkout') {
+            agent {label 'ATW_LAB_PC11'}
             steps {
                 git 'https://github.com/jeffcwtang/toh.git'
                 
             }
         }
+        
         stage('Angular build'){
+            agent {label 'ATW_LAB_PC11'}
             steps{
                 bat '''npm install'''
                 bat '''ng build --configuration production'''
@@ -25,11 +28,8 @@ pipeline {
                 bat "docker push 10.18.30.15:5000/angulartest"
             }
         }
-        
-    }
-    agent {label 'ATW_LAB_PC11'}
-    stages {
-            stage('Angular deploy'){
+        stage('Angular deploy'){
+            agent {label 'ATW_LAB_PC11'}
             steps{
                 // bat "'C:\\Program Files\\Docker\\Docker\\DockerCli.exe' -SwitchLinuxEngine"
                 // bat "docker build -t angulartest ."
