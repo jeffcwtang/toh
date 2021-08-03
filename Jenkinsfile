@@ -7,6 +7,7 @@ pipeline {
                 stage('SCM Checkout') {
                     steps {
                         git 'https://github.com/jeffcwtang/toh.git'
+                        bat "echo 'Building...' ; exit 1"  
                     }
                 }
                 stage('Angular build'){
