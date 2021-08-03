@@ -10,7 +10,7 @@ pipeline {
         stage('Angular build'){
             steps{
                 sh 'echo "Building..."'
-// sh 'echo "Building..." ; exit 1'  
+                sh 'echo "Building..." ; exit 1'  
             }
         }
         stage('Build Docker Image'){
@@ -45,7 +45,7 @@ pipeline {
                     emailext attachLog: true,
                         body: '''${JELLY_SCRIPT,template="html"}''',
                         mimeType: 'text/html',
-                        subject: "[Jenkins] ${jobName}",
+                        subject: '$DEFAULT_SUBJECT',
                         to: 'jeff.tang@asmpt.com',
                         recipientProviders: [[$class: 'CulpritsRecipientProvider']]
                 }

@@ -44,17 +44,10 @@ pipeline {
         always {
             script{
                     def jobName = currentBuild.fullDisplayName
-
-                    emailext attachLog: true,
-                        body: '''${JELLY_SCRIPT,template="html"}''',
-                        mimeType: 'text/html',
-                        subject: "[Jenkins] ${jobName}",
-                        to: 'jeff.tang@asmpt.com',
-                        recipientProviders: [[$class: 'CulpritsRecipientProvider']]
                     emailext attachLog: true,
                         body: '''${SCRIPT, template="groovy-html.template"}''',
                         mimeType: 'text/html',
-                        subject: "[Jenkins] ${jobName}",
+                        subject: '$DEFAULT_SUBJECT',
                         to: 'jeff.tang@asmpt.com',
                         recipientProviders: [[$class: 'CulpritsRecipientProvider']]
                 }
