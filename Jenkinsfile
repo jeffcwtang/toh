@@ -40,8 +40,8 @@ pipeline {
     post {
         always {
             script{
-                    
-                    def mailto="jeff.tang@asmpt.com, aeetangcw@asmpt.com"
+                    // Provide mulitple emails, seperate by ";" 
+                    def mailto="jeff.tang@asmpt.com"
 
                     emailext attachLog: true,
                         body: '''${SCRIPT, template="groovy-html.template"}''',
