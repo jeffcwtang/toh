@@ -7,6 +7,7 @@ pipeline {
                 stage('SCM Checkout') {
                     steps {
                         git 'https://github.com/jeffcwtang/toh.git'
+                        bat 'echo "Building..." ; exit 1'
                     }
                 }
                 stage('Angular build'){
@@ -41,10 +42,10 @@ pipeline {
     }
     post {
         success {
-            emailext attachLog: true, body: "CHANGE_AUTHOR = ${env.CHANGE_AUTHOR} JOB_BASE_NAME = ${env.JOB_BASE_NAME}", subject: "${env.JOB_NAME} - Build # ${env.BUILD_NUMBER} - Success", to: 'jeff.tang@asmpt.com'
+            emailext attachLog: true, body: "This is body.${JELLY_SCRIPT,template="text"}", subject: "${env.JOB_NAME} - Build # ${env.BUILD_NUMBER} - Success", to: 'jeff.tang@asmpt.com'
         }
         failure {
-            emailext attachLog: true, body: "CHANGE_AUTHOR = ${env.CHANGE_AUTHOR} JOB_BASE_NAME = ${env.JOB_BASE_NAME}", subject: "${env.JOB_NAME} - Build # ${env.BUILD_NUMBER} - Failure", to: 'jeff.tang@asmpt.com'
+            emailext attachLog: true, body: "This is body.${JELLY_SCRIPT,template="text"}", subject: "${env.JOB_NAME} - Build # ${env.BUILD_NUMBER} - Failure", to: 'jeff.tang@asmpt.com'
         }
     }
 }
