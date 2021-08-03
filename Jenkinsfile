@@ -7,7 +7,6 @@ pipeline {
                 stage('SCM Checkout') {
                     steps {
                         git 'https://github.com/jeffcwtang/toh.git'
-                        bat "echo 'Building...' ; exit 1"  
                     }
                 }
                 stage('Angular build'){
@@ -32,8 +31,6 @@ pipeline {
         stage('Angular deploy'){
             agent {label 'ATW_LAB_PC11'}
             steps{
-                // bat "'C:\\Program Files\\Docker\\Docker\\DockerCli.exe' -SwitchLinuxEngine"
-                // bat "docker build -t angulartest ."
                 bat "docker stop testsite"
                 bat "docker rm testsite"
                 bat "docker run -p 8081:80 -d --restart=always --name testsite 10.18.30.15:5000/angulartest"
@@ -43,14 +40,15 @@ pipeline {
     post {
         always {
             script{
-                    def jobName = currentBuild.fullDisplayName
+                    
+                    def mailto="jeff.tang@asmpt.com, aeetangcw@asmpt.com"
 
                     emailext attachLog: true,
                         body: '''${SCRIPT, template="groovy-html.template"}''',
                         mimeType: 'text/html',
                         subject: '$DEFAULT_SUBJECT',
-                        to: 'jeff.tang@asmpt.com',
-                        recipientProviders: [[$class: 'CulpritsRecipientProvider']]
+                        to: '${mailTo}',
+                        recipientProviders: [requestor()]
                 }
         }
     }
