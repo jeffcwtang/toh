@@ -42,13 +42,13 @@ pipeline {
         always {
             script{
                     // Provide mulitple emails, seperate by ";" 
-                    def mailto="jeff.tang@asmpt.com"
+                    def mailTo="jeff.tang@asmpt.com"
 
                     emailext attachLog: true,
                         body: '''${SCRIPT, template="groovy-html.template"}''',
                         mimeType: 'text/html',
                         subject: '$DEFAULT_SUBJECT',
-                        to: '${mailTo}',
+                        to: "${mailTo}",
                         recipientProviders: [requestor()]
                 }
         }
