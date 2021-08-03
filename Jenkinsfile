@@ -44,6 +44,7 @@ pipeline {
         always {
             script{
                     def jobName = currentBuild.fullDisplayName
+
                     emailext attachLog: true,
                         body: '''${SCRIPT, template="groovy-html.template"}''',
                         mimeType: 'text/html',

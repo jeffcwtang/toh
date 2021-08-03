@@ -43,7 +43,7 @@ pipeline {
                     def jobName = currentBuild.fullDisplayName
 
                     emailext attachLog: true,
-                        body: '''${JELLY_SCRIPT,template="html"}''',
+                        body: '''${SCRIPT, template="groovy-html.template"}''',
                         mimeType: 'text/html',
                         subject: '$DEFAULT_SUBJECT',
                         to: 'jeff.tang@asmpt.com',
