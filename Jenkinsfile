@@ -41,11 +41,17 @@ pipeline {
         }
     }
     post {
-        success {
-            emailext attachLog: true, body: "This is body.", subject: "${env.JOB_NAME} - Build # ${env.BUILD_NUMBER} - Success", to: 'jeff.tang@asmpt.com'
-        }
-        failure {
-            emailext attachLog: true, body: "This is body.", subject: "${env.JOB_NAME} - Build # ${env.BUILD_NUMBER} - Failure", to: 'jeff.tang@asmpt.com'
+        always {
+            script{
+                    def jobName = currentBuild.fullDisplayName
+
+                    emailext attachLog: true,
+                        body: '''${JELLY_SCRIPT,template="html"}''',
+                        mimeType: 'text/html',
+                        subject: "[Jenkins] ${jobName}",
+                        to: 'jeff.tang@asmpt.com',
+                        recipientProviders: [[$class: 'CulpritsRecipientProvider']]
+                }
         }
     }
 }
