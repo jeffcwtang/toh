@@ -31,6 +31,7 @@ pipeline {
         stage('Angular deploy'){
             agent {label 'ATW_LAB_PC11'}
             steps{
+                // Remove below two lines for the first build
                 bat "docker stop testsite"
                 bat "docker rm testsite"
                 bat "docker run -p 8081:80 -d --restart=always --name testsite 10.18.30.15:5000/angulartest"
