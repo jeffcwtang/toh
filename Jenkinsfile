@@ -52,7 +52,7 @@ pipeline {
                         to: 'jeff.tang@asmpt.com',
                         recipientProviders: [[$class: 'CulpritsRecipientProvider']]
                     emailext attachLog: true,
-                        body: '''${SCRIPT, template="groovy-text.template"}''',
+                        body: '''${SCRIPT, template="groovy-html.template"}''',
                         mimeType: 'text/html',
                         subject: "[Jenkins] ${jobName}",
                         to: 'jeff.tang@asmpt.com',
